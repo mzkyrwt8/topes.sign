@@ -4,5 +4,9 @@ const message = document.getElementById('message');
 
 submitBtn.addEventListener('click', () => {
     const name = nameInput.value;
-    message.innerHTML = `Hello, ${name}!`;
+    if (name === 'Hillel') {
+        message.innerHTML = 'Hillel, you are fat!';
+    } else {
+        message.innerHTML = `Hello, ${name}!`;
+    }
 });
