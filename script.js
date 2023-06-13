@@ -4,6 +4,7 @@ const cleanBtn = document.getElementById('clean-btn');
 const signature = document.getElementById('signature');
 const nameInput = document.getElementById('name-input');
 const submitBtn = document.getElementById('submit-btn');
+const touchDiv = document.getElementById('touch-div');
 
 canvas.width = 600;
 canvas.height = 200;
@@ -33,14 +34,37 @@ canvas.addEventListener('mousedown', (e) => {
 canvas.addEventListener('mousemove', draw);
 canvas.addEventListener('mouseup', () => isDrawing = false);
 
-canvas.addEventListener('touchstart', (e) => {
-    isDrawing = true;
-    lastX = e.touches[0].clientX - canvas.offsetLeft;
-    lastY = e.touches[0].clientY - canvas.offsetTop;
+touchDiv.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const x = touch.clientX - touchDiv.offsetLeft;
+    const y = touch.clientY - touchDiv.offsetTop;
+    const rect = canvas.getBoundingClientRect();
+    const adjustedX = x - rect.left;
+    const adjustedY = y - rect.top;
+    if (adjustedX >= 0 && adjustedX <= canvas.width && adjustedY >= 0 && adjustedY <= canvas.height) {
+        isDrawing = true;
+        lastX = adjustedX;
+        lastY = adjustedY;
+    }
 });
 
-canvas.addEventListener('touchmove', draw);
-canvas.addEventListener('touchend', () => isDrawing = false);
+touchDiv.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const x = touch.clientX - touchDiv.offsetLeft;
+    const y = touch.clientY - touchDiv.offsetTop;
+    const rect = canvas.getBoundingClientRect();
+    const adjustedX = x - rect.left;
+    const adjustedY = y - rect.top;
+    if (isDrawing && adjustedX >= 0 && adjustedX <= canvas.width && adjustedY >= 0 && adjustedY <= canvas.height) {
+        draw({ offsetX: adjustedX, offsetY: adjustedY });
+    }
+});
+
+touchDiv.addEventListener('touchend', () => {
+    isDrawing = false;
+});
 
 cleanBtn.addEventListener('click', () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
