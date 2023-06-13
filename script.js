@@ -33,6 +33,15 @@ canvas.addEventListener('mousedown', (e) => {
 canvas.addEventListener('mousemove', draw);
 canvas.addEventListener('mouseup', () => isDrawing = false);
 
+canvas.addEventListener('touchstart', (e) => {
+    isDrawing = true;
+    lastX = e.touches[0].clientX - canvas.offsetLeft;
+    lastY = e.touches[0].clientY - canvas.offsetTop;
+});
+
+canvas.addEventListener('touchmove', draw);
+canvas.addEventListener('touchend', () => isDrawing = false);
+
 cleanBtn.addEventListener('click', () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     signature.innerHTML = '';
