@@ -2,6 +2,7 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const cleanBtn = document.getElementById('clean-btn');
 const signature = document.getElementById('signature');
+const nameInput = document.getElementById('name-input');
 const submitBtn = document.getElementById('submit-btn');
 
 canvas.width = 600;
@@ -35,12 +36,15 @@ canvas.addEventListener('mouseup', () => isDrawing = false);
 cleanBtn.addEventListener('click', () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     signature.innerHTML = '';
+    nameInput.value = '';
 });
 
 submitBtn.addEventListener('click', () => {
-    const name = signature.innerHTML;
+    const name = nameInput.value;
     if (name === '') {
-        alert('Please sign your name.');
+        alert('Please enter your name.');
+    } else if (name.toLowerCase() === 'hillel') {
+        alert('Hello, my love!');
     } else {
         alert(`Hello, ${name}!`);
     }

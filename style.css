@@ -31,3 +31,26 @@ button:hover {
     font-size: 20px;
     font-weight: bold;
 }
+
+#name-input {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+}
+
+#submit-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#submit-btn:hover {
+    background-color: #0069d9;
+}
