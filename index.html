@@ -2,19 +2,22 @@
 <html>
 
 <head>
-    <title>Sign Your Name</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Canvas Drawing</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div class="container">
         <h1>Sign your name:</h1>
-        <canvas id="canvas"></canvas>
+        <div class="canvas-container">
+            <canvas id="canvas"></canvas>
+            <!--   <div class="touch-div" id="touch-div"></div> -->
+        </div>
+        <div>
+            <input type="text" id="name-input" placeholder="Enter your name">
+            <button id="submit-btn">Submit</button>
+        </div>
         <button id="clean-btn">Clean</button>
-        <div id="signature"></div>
-        <h1>Enter your name:</h1>
-        <input type="text" id="name-input">
-        <button id="submit-btn">Submit</button>
     </div>
     <script src="script.js"></script>
 </body>
