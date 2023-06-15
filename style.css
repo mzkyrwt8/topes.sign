@@ -2,14 +2,20 @@
     max-width: 600px;
     margin: 0 auto;
     text-align: center;
+    background-color: aqua;
 }
 
 h1 {
     margin-bottom: 20px;
 }
 
+touch-div {
+    border: 1px solid #000000;
+}
+
 canvas {
     border: 1px solid #ccc;
+    background-color: rgb(112, 197, 246);
 }
 
 button {
