@@ -1,13 +1,12 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const cleanBtn = document.getElementById('clean-btn');
-const signature = document.getElementById('signature');
 const nameInput = document.getElementById('name-input');
 const submitBtn = document.getElementById('submit-btn');
 const touchDiv = document.getElementById('touch-div');
 
 canvas.width = 600;
-canvas.height = 200;
+canvas.height = 300;
 
 let isDrawing = false;
 let lastX = 0;
@@ -18,21 +17,22 @@ function draw(e) {
 
     ctx.beginPath();
     ctx.moveTo(lastX, lastY);
-    ctx.lineTo(e.offsetX || e.touches[0].clientX - canvas.offsetLeft, e.offsetY || e.touches[0].clientY - canvas.offsetTop);
+    ctx.lineTo(e.offsetX, e.offsetY);
     ctx.stroke();
 
-    lastX = e.offsetX || e.touches[0].clientX - canvas.offsetLeft;
-    lastY = e.offsetY || e.touches[0].clientY - canvas.offsetTop;
+    lastX = e.offsetX;
+    lastY = e.offsetY;
 }
 
-canvas.addEventListener('mousedown', (e) => {
+touchDiv.addEventListener('mousedown', (e) => {
     isDrawing = true;
     lastX = e.offsetX;
     lastY = e.offsetY;
 });
 
-canvas.addEventListener('mousemove', draw);
-canvas.addEventListener('mouseup', () => isDrawing = false);
+touchDiv.addEventListener('mousemove', draw);
+touchDiv.addEventListener('mouseup', () => isDrawing = false);
+touchDiv.addEventListener("mouseout", () => isDrawing = false);
 
 touchDiv.addEventListener('touchstart', (e) => {
     e.preventDefault();
@@ -68,7 +68,6 @@ touchDiv.addEventListener('touchend', () => {
 
 cleanBtn.addEventListener('click', () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    signature.innerHTML = '';
     nameInput.value = '';
 });
 
