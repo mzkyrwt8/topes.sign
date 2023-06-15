@@ -18,11 +18,11 @@ function draw(e) {
 
     ctx.beginPath();
     ctx.moveTo(lastX, lastY);
-    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.lineTo(e.offsetX || e.touches[0].clientX - canvas.offsetLeft, e.offsetY || e.touches[0].clientY - canvas.offsetTop);
     ctx.stroke();
 
-    lastX = e.offsetX;
-    lastY = e.offsetY;
+    lastX = e.offsetX || e.touches[0].clientX - canvas.offsetLeft;
+    lastY = e.offsetY || e.touches[0].clientY - canvas.offsetTop;
 }
 
 canvas.addEventListener('mousedown', (e) => {
@@ -37,8 +37,8 @@ canvas.addEventListener('mouseup', () => isDrawing = false);
 touchDiv.addEventListener('touchstart', (e) => {
     e.preventDefault();
     const touch = e.touches[0];
-    const x = touch.clientX - touchDiv.offsetLeft;
-    const y = touch.clientY - touchDiv.offsetTop;
+    const x = touch.clientX - canvas.offsetLeft;
+    const y = touch.clientY - canvas.offsetTop;
     const rect = canvas.getBoundingClientRect();
     const adjustedX = x - rect.left;
     const adjustedY = y - rect.top;
@@ -52,8 +52,8 @@ touchDiv.addEventListener('touchstart', (e) => {
 touchDiv.addEventListener('touchmove', (e) => {
     e.preventDefault();
     const touch = e.touches[0];
-    const x = touch.clientX - touchDiv.offsetLeft;
-    const y = touch.clientY - touchDiv.offsetTop;
+    const x = touch.clientX - canvas.offsetLeft;
+    const y = touch.clientY - canvas.offsetTop;
     const rect = canvas.getBoundingClientRect();
     const adjustedX = x - rect.left;
     const adjustedY = y - rect.top;
