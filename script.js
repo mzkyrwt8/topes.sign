@@ -5,8 +5,8 @@ const nameInput = document.getElementById('name-input');
 const submitBtn = document.getElementById('submit-btn');
 const touchDiv = document.getElementById('touch-div');
 
-canvas.width = 600;
-canvas.height = 300;
+canvas.width = canvas.getBoundingClientRect().width;
+canvas.height = canvas.getBoundingClientRect().height;
 
 let isDrawing = false;
 let lastX = 0;
