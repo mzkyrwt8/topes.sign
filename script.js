@@ -5,8 +5,8 @@ const nameInput = document.getElementById('name-input');
 const submitBtn = document.getElementById('submit-btn');
 const touchDiv = document.getElementById('touch-div');
 
-canvas.width = 600;
-canvas.height = 300;
+canvas.width = canvas.getBoundingClientRect().width;
+canvas.height = canvas.getBoundingClientRect().height;
 
 let isDrawing = false;
 let lastX = 0;
@@ -24,16 +24,16 @@ function draw(e) {
     lastY = e.offsetY;
 }
 
-canvas.addEventListener('mousedown', (e) => {
+touchDiv.addEventListener('mousedown', (e) => {
     isDrawing = true;
     lastX = e.offsetX;
     lastY = e.offsetY;
 });
 
-canvas.addEventListener('mousemove', draw);
-canvas.addEventListener('mouseup', () => isDrawing = false);
-canvas.addEventListener("mouseout", () => isDrawing = false);
-/*
+touchDiv.addEventListener('mousemove', draw);
+touchDiv.addEventListener('mouseup', () => isDrawing = false);
+touchDiv.addEventListener("mouseout", () => isDrawing = false);
+
 touchDiv.addEventListener('touchstart', (e) => {
     e.preventDefault();
     const touch = e.touches[0];
@@ -65,7 +65,7 @@ touchDiv.addEventListener('touchmove', (e) => {
 touchDiv.addEventListener('touchend', () => {
     isDrawing = false;
 });
-*/
+
 cleanBtn.addEventListener('click', () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     nameInput.value = '';
