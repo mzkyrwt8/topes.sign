@@ -4,6 +4,7 @@ const cleanBtn = document.getElementById('clean-btn');
 const nameInput = document.getElementById('name-input');
 const submitBtn = document.getElementById('submit-btn');
 const touchDiv = document.getElementById('touch-div');
+const downloadBtn = document.getElementById('download-btn');
 
 canvas.width = canvas.getBoundingClientRect().width;
 canvas.height = canvas.getBoundingClientRect().height;
@@ -81,3 +82,47 @@ submitBtn.addEventListener('click', () => {
         alert(`Hello, ${name}!`);
     }
 });
+
+
+downloadBtn.addEventListener("click", function () {
+    createDoc();
+});
+
+function createDoc() {
+    gapi.load("client", function () {
+        // Initialize the API client library
+        gapi.client.init({
+            apiKey: "AIzaSyB7hswPmDPnReJukc-12DhYLLEgyVEEQ_M",
+            discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
+        }).then(function () {
+            // Create a new Google Drive/Docs document
+            return gapi.client.drive.files.create({
+                requestBody: {
+                    mimeType: "application/vnd.google-apps.document"
+                }
+            });
+        }).then(function (response) {
+            var docId = response.result.id;
+            return fetch("https://docs.google.com/document/d/" + docId + "/export?format=docx", {
+                headers: {
+                    Authorization: "Bearer " + gapi.auth.getToken().access_token
+                }
+            });
+        }).then(function (response) {
+            return response.blob();
+        }).then(function (blob) {
+            // Create a temporary link to the document
+            var link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "document.docx";
+            document.body.appendChild(link);
+            // Click the link to download the document
+            link.click();
+            // Remove the temporary link
+            document.body.removeChild(link);
+        }).catch(function (error) {
+            console.error("Error creating or downloading the document:", error);
+        });
+    });
+}
+
